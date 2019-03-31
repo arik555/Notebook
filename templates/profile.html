@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block head_scripts %}
+<!-- Content Here -->
+{% endblock %}
+
+{% block content %}
+<!-- Content Here -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div>
+				<span class="h3"><i class="fa fa-user h2"></i> User Credentials</span>
+				<span class="col-sm-6">
+					<table class="table table-bordered">
+						<tr>
+							<th>First Name</th>
+							<td>{{ instance.first_name }}</td>
+						</tr>
+						<tr>
+							<th>Last Name</th>
+							<td>{{ instance.last_name }}</td>
+						</tr>
+						<tr>
+							<th>Email</th>
+							<td>{{ instance.email }}</td>
+						</tr>
+						<tr>
+							<th>Username</th>
+							<td>{{ request.user }}</td>
+						</tr>
+						<tr>
+							<th>Action</th>
+							<td><button class="btn btn-info" onclick="window.location.assign('{% url 'change_password' %}')">Change Password</button><button class="btn btn-primary ml-2" onclick="window.location.assign('{% url 'user_edit' %}')">Edit Credentials</button></td>
+						</tr>
+					</table>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block foot_scripts %}
+<!-- Content Here -->
+
+{% endblock %}
+
+{% block nav_active %}
+{% if profile %}
+<script type="text/javascript">
+	$('.nav_power').addClass('active');
+	$('#nav_profile').addClass('active');
+</script>
+{% endif %}
+{% endblock %}

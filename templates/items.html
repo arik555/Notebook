@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block head_scripts %}
+<!-- Content Here -->
+{% endblock %}
+
+{% block content %}
+<!-- Content Here -->
+<style type="text/css">
+	.subj:hover {
+	   -moz-box-shadow:    inset 0 0 10px #000000;
+	   -webkit-box-shadow: inset 0 0 10px #000000;
+	   box-shadow:         inset 0 0 10px #000000;
+	   transition: 0.5s;
+	   cursor: pointer;
+		 z-index: 99;
+	}
+</style>
+<div class="container-fluid">
+	<div class="row d-flex justify-content-center">
+		<form class="form-inline">
+			<input class="form-control" type="text" name="srch_query" placeholder="Search" id="srch" value="{{ request.GET.srch_query }}">
+			<button class="btn btn-outline-dark" type="submit" title="Search"><i class="fa fa-search p-1" aria-hidden="true"></i></button>
+		</form>
+	</div>
+
+	<style>
+		.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgb(133, 97, 216);
+}
+
+.card:hover .overlay {
+  opacity: 0.9;
+	cursor: wait;
+}
+
+.text {
+  color: white;
+  font-size: 16px;
+	font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  
+}
+		</style>
+		<div class="row" id="change">
+			{% if subjects %}
+			<script>
+				$('#change').addClass('d-flex align-items-stretch');
+			</script>
+				{% for each in subjects %}
+						<div class="card col-11 col-sm-10 col-md-5 col-lg-4 col-xl-3 m-1">
+								{% if each.thumb_img %}
+								<!-- <img alt="Card image cap" class="card-img-top img-fluid " src="{{ each.thumb_img }}" /> -->
+								<img src="{{ each.thumb_img }}" style="max-width: 400px; max-height: 300px;" class="img-fluid"/>
+								{% else %}
+								<!-- <img alt="Card image cap" class="card-img-top img-fluid" src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" /> -->
+								<img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" class="img-fluid"/>
+								<!-- <img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" style="max-width: 400px; max-height: 300px;" class="img-fluid d-block"/> -->
+								{% endif %}
+								<div class="overlay">
+									<div class="text">
+										<p>{{ each.name }}<br>
+												<span style="color:darkgreen;">Author: {{ each.user }}</span>
+										</p><br>										
+										<button class="btn btn-warning btn-sm" onclick="window.location.assign('{% url 'items' sub_id=each.id %}')" title="Click to preview">Explore</button>
+									</div>
+								</div>
+						</div>
+
+
+
+
+
+
+
+
+
+			{% endfor %}
+		{% elif notes %}
+			<div class="col-12">
+				<h4 id="sub"></h4><br>
+				<div class="card col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 bg-light my-2">
+					<p style="font-weight:bold; text-decoration: underline;color:navy;">DESCRIPTION BOX:</p>
+					<p id="sub_desc"></p>
+				</div>
+			</div>
+			<div class="col-12">
+				<ul class="list-group">
+			{% for each in notes %}
+			{% if forloop.first %}
+				<script type="text/javascript">
+					$("#sub").html("{{ each.subject }}");
+					$("#sub_desc").html("{{ each.subject.desc }}");
+					// $("#not_found").html("");
+				</script>
+			{% endif %}
+						<li class="list-group-item">
+							<button class="btn btn-outline-dark mr-1" title="View" onclick="window.location.assign('{% url 'display' note_id=each.id %}')"><i class="fa fa-eye"></i></button>
+							<b>{{ forloop.counter }}. {{ each.title }}</b>
+						</li>
+				<!-- <div class="card">
+				    <div class="card-body" style="word-break: break-all;">
+				    	<br>
+				    	<button class="btn btn-outline-dark" title="View"><i class="fa fa-eye"></i></button>
+				    </div>
+				</div> -->
+			{% endfor %}
+			</ul>
+			</div>
+		{% else %}
+			<h5 id="not_found">No records found.</h5>
+		{% endif %}
+	</div>
+	<div class="row d-flex justify-content-center mt-4">
+	{% if notes %}
+		{% with instance=notes %}
+		{% if instance.has_other_pages %}
+		  <ul class="pagination">
+		    {% if instance.has_previous %}
+		      <li><a href="?page={{ instance.previous_page_number }}" class="btn btn-link" style="text-decoration:none;" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='#007bff'">&laquo; Previous</a></li>
+		    {% else %}
+		      <li class="disabled"><span class="btn btn-link disabled" style="color:maroon;">&laquo; Previous</span></li>
+		    {% endif %}
+
+		{% if instance.number|add:'-4' > 1 %}
+		    <li><a href="?page={{ instance.number|add:'-5' }}">&hellip;</a></li>
+		{% endif %}
+
+	    {% for i in page_range %}
+	      {% if instance.number == i %}
+	        <li class="active"><span class="btn btn-info">{{ i }} <span class="sr-only">(current)</span></span></li>
+	      {% else %}
+	        <li><a href="?page={{ i }}" class="btn btn-light">{{ i }}</a></li>
+	      {% endif %}
+	    {% endfor %}
+
+
+		{% if instance.paginator.num_pages > instance.number|add:'4' %}
+		    <li><a href="?page={{ instance.number|add:'5' }}">&hellip;</a></li>
+		{% endif %}
+	    {% if instance.has_next %}
+	      <li><a href="?page={{ instance.next_page_number }}" class="btn btn-link" style="text-decoration:none;" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='#007bff'">Next &raquo;</a></li>
+	    {% else %}
+	      <li class="disabled"><span class="btn btn-link disabled" style="color:maroon;">Next &raquo;</span></li>
+	    {% endif %}
+		  </ul>
+		{% endif %}
+		{% endwith %}
+		<!-- ################################################ -->
+	{% elif subjects %}
+		{% with instance=subjects %}
+		{% if instance.has_other_pages %}
+		  <ul class="pagination">
+		    {% if instance.has_previous %}
+		      <li><a href="?page={{ instance.previous_page_number }}" class="btn btn-link" style="text-decoration:none;" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='#007bff'">&laquo; Previous</a></li>
+		    {% else %}
+		      <li class="disabled"><span class="btn btn-disabled" style="color:maroon;">&laquo; Previous</span></li>
+		    {% endif %}
+
+		{% if instance.number|add:'-4' > 1 %}
+		    <li><a href="?page={{ instance.number|add:'-5' }}">&hellip;</a></li>
+		{% endif %}
+
+	    {% for i in page_range %}
+	      {% if instance.number == i %}
+	        <li class="active"><span class="btn btn-info">{{ i }} <span class="sr-only">(current)</span></span></li>
+	      {% else %}
+	        <li><a href="?page={{ i }}" class="btn btn-light">{{ i }}</a></li>
+	      {% endif %}
+	    {% endfor %}
+
+
+		{% if instance.paginator.num_pages > instance.number|add:'4' %}
+		    <li><a href="?page={{ instance.number|add:'5' }}">&hellip;</a></li>
+		{% endif %}
+
+	    {% if instance.has_next %}
+	      <li><a href="?page={{ instance.next_page_number }}" class="btn btn-link" style="text-decoration:none;" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='#007bff'">Next &raquo;</a></li>
+	    {% else %}
+	      <li class="disabled"><span class="btn btn-link btn-disabled" style="color:maroon;">Next &raquo;</span></li>
+	    {% endif %}
+		  </ul>
+		{% endif %}
+		{% endwith %}
+	{% endif %}
+	</div>
+</div>
+
+{% endblock %}
+
+{% block foot_scripts %}
+<!-- Content Here -->
+{% endblock %}
+
+{% block nav_active %}
+<script type="text/javascript">
+	$('#nav_content').addClass('active');
+</script>
+{% endblock %}

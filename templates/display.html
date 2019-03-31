@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block head_scripts %}
+<!-- Content Here -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clappr-responsive-container-plugin@1.0.0/dist/clappr-responsive-container-plugin.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	{% if instance.video_link %}
+	<p>Video Found</p>
+    <div class="row">
+	    <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-6">
+	        <div class="embed-responsive embed-responsive-16by9">
+	        <div id="player" class="embed-responsive-item"></div>
+	        </div>
+	       	<div class="fb-like my-1" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+			<script>
+			$(function () {
+			    $("#player").resize({
+			        aspectRatio: 16 / 9,
+			        maxHeight: 720,
+			        maxWidth: 1280,
+			        minHeight: 180,
+			        minWidth: 320
+			    });
+			    var player = new Clappr.Player({
+			        source: '{{ instance.get_stream_link|safe }}',
+			        poster: '',
+			        parentId: "#player",
+			        height: "100%",
+			        width: "100%",
+			        preload: true,
+			    });
+			});
+			</script>
+	    </div>
+	    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-6 my-3" style="overflow:scroll; height:400px; overflow-x: hidden;">
+	    	<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="50"></div>
+	    </div>
+    </div>
+    {% else %}
+    	<p>Video Not Found</p>
+	{% endif %}
+	<div class="row">
+    	<div class="col-10 col-sm-10 col-md-10 col-lg-10 m-2 card bg-light">
+			<p> <b style="color:navy;text-decoration: underline;">DESCRIPTION BOX:</b> <br>{{ instance.custom_desc|safe }}</p>
+		</div>
+	</div>
+    {% if instance.pdf_link %}
+    	<p>PDF Found</p>
+    <div class="row">
+    	<div class="embed-responsive embed-responsive-16by9">
+			<iframe class="embed-responsive-item" src="{{ instance.get_pdf_link|safe }}#view=FitH" allowfullscreen="no" scrolling="yes" type="application/pdf"></iframe>
+			<div style="width: 200px; height: 80px; position: absolute; opacity: 0; right: 10px; top: 0px;"></div>
+		</div>
+    </div>
+    {% else %}
+    	<p>PDF Not Found</p>
+    {% endif %}
+    
+</div>
+
+<!-- Content Here -->
+
+
+{% endblock %}
+
+{% block foot_scripts %}
+<!-- Content Here -->
+{% endblock %}

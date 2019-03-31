@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block head_scripts %}
+<!-- Content Here -->
+{% endblock %}
+
+{% block content %}
+<!-- Content Here -->
+<!-- <a href="http://mysuperweb.dualstack.speedtestcustom.com/" 
+		target="popup" onclick="window.open('http://mysuperweb.dualstack.speedtestcustom.com/','SpeedTestWindow','width=600,height=600,resizable=0,menubar=0,toolbar=0'); return false;">
+			SpeedTest
+	</a> -->
+	<script>
+	$('body').attr('style', 'background-color: white;');
+	</script>
+<section class="jumbotron text-center" style="background-color: #563D7C; color: #fff; border-radius: 0px;">
+	<div class="container py-4">
+		<h2 class="display-1 pt-4">Note&beta;uk</h2>
+		<h2 class="lead pb-4">We live to educate!</h2>
+	</div>
+	<div class="container pb-4">
+		<button class="btn btn-primary">Browse Courses</button>
+	</div>
+</section>
+<section class="jumbotron" style="background-color: #fff;">
+	<div class="container-fluid">
+		<h2 style="word-wrap: break-word;" class="text-center py-4 display-4">Simplicity .Performance .Perfection. Education</h2>
+		<div class="row py-4 text-center">
+			<div class="col-sm-4 py-2">
+				<h1 style="color:#563D7C;"><i class="fa fa-file-video-o" aria-hidden="true" style="font-size:2em;"></i></h1>
+				<h3 class="py-2">Premium Quality Videos</h3>
+				<h4 class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, illo debitis natus a at magnam pariatur voluptates quam tenetur nobis fugit eum eligendi enim ipsam mollitia. Minima, reiciendis mollitia. Similique.</h4>
+			</div>
+			<div class="col-sm-4 py-2">
+					<h1 style="color:#563D7C;"><i class="fa fa-book" aria-hidden="true" style="font-size:2em;"></i></h1>
+				<h3 class="py-2">Knowledge is Power</h3>
+				<h4 class="lead">Knowledge is Power, Power provides Information; Information leads to Education, Education breeds Wisdom; Wisdom is Liberation.</h4>
+			</div>
+			<div class="col-sm-4 py-2">
+					<h1 style="color:#563D7C;"><i class="fa fa-file-word-o" aria-hidden="true" style="font-size:2em;"></i></h1>
+				<h3 class="py-2">Well Documented</h3>
+				<h4 class="lead">All our courses come with detailed documentation that will get you started in no time.</h4>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgb(133, 97, 216);
+}
+
+.card:hover .overlay {
+  opacity: 0.9;
+	cursor: wait;
+}
+
+.text {
+  color: white;
+  font-size: 15px;
+	font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.card {
+	margin: 1.7px;
+}
+</style>
+<section class="jumbotron" style="border-radius:30px;">
+	<div class="container-fluid">
+		<h1 class="text-center">Subjects and Courses Offered</h1>
+		<h2 class="text-center lead">We are excited to make the world a better place by educating people in a large scale.</h2>
+		<div class="row d-flex align-items-stretch justify-content-center">
+			<div class="card col-12 col-sm-10 col-md-6 col-lg-4 col-xl-3">
+					<img src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/03/pandas.jpg" title="" class="img-fluid d-block" style="max-width: 400px; max-height: 300px;"/>
+					<div class="overlay">
+						<div class="text">
+							Pandas Using Python <br>
+							<button class="btn btn-warning">Explore</button>
+						</div>
+					</div>
+			</div>
+			<div class="card col-12 col-sm-10 col-md-6 col-lg-4 col-xl-3">
+						<img src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/03/pandas.jpg" title="" class="img-fluid d-block" style="max-width: 400px; max-height: 300px;"/>
+						<div class="overlay">
+								<div class="text">
+									Pandas Using Python <br>
+									<button class="btn btn-warning">Explore</button>
+								</div>
+							</div>
+				</div>
+				<div class="card col-12 col-sm-10 col-md-6 col-lg-4 col-xl-3">
+						<img src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/03/pandas.jpg" title="" class="img-fluid d-block" style="max-width: 400px; max-height: 300px;"/>
+						<div class="overlay">
+								<div class="text">
+									Pandas Using Python <br>
+									<button class="btn btn-warning">Explore</button>
+								</div>
+							</div>
+				</div>
+				<div class="card col-12 col-sm-10 col-md-6 col-lg-4 col-xl-3">
+						<img src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/03/pandas.jpg" title="" class="img-fluid d-block" style="max-width: 400px; max-height: 300px;"/>
+						<div class="overlay">
+								<div class="text">
+									Pandas Using Python <br>
+									<button class="btn btn-warning">Explore</button>
+								</div>
+							</div>
+				</div>
+		</div>
+		<div class="text-center">
+			<button class="btn btn-info btn-lg mt-3" onclick="window.location.assign('{% url 'items' %}')">View More</button>
+		</div>
+	</div>
+</section>
+<section>
+	
+</section>
+
+{% endblock %}
+
+{% block foot_scripts %}
+<!-- Content Here -->
+<script>
+	$('footer').attr('class', 'text-muted pt-3 bg-dark');
+</script>
+{% endblock %}
+
+{% block nav_active %}
+{{ block.super }}
+<div style="height:20px;background-image: linear-gradient(white, #343a40);">
+
+</div>
+{% endblock %}

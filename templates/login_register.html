@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block head_scripts %}
+<!-- Content Here -->
+{% endblock %}
+
+{% block content %}
+<!-- Content Here -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 offset-md-2">
+			<form method="post" novalidate>
+			  {% csrf_token %}
+			  {% include 'bs4_form.html' with form=form %}
+			  {% if login %}
+			  <button type="submit" class="btn btn-success mb-2" title="Sign In">Login</button>
+			  {% elif update %}
+			  <button type="submit" class="btn btn-success mb-2" title="Update">Update</button>
+			  {% else %}
+			  <button type="submit" class="btn btn-success mb-2" title="Sign Up">Register</button>
+			  {% endif %}
+			  <button type="button" class="btn btn-primary mb-2" onclick="window.location.assign('{% url 'items' %}')" title="Go to Home">Cancel</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block foot_scripts %}
+<!-- Content Here -->
+<script type="text/javascript">
+	$(function (){
+		$('input').prop('required', 'true');
+		$('#id_password').attr('type', 'password');
+	});
+	
+</script>
+{% endblock %}
+
+{% block nav_active %}
+{% if login %}
+<script type="text/javascript">
+	$('.nav_power').addClass('active');
+	$('#nav_login').addClass('active');
+</script>
+{% elif update %}
+<script type="text/javascript">
+	$('.nav_power').addClass('active');
+	$('#nav_update').addClass('active');
+</script>
+{% else %}
+<script type="text/javascript">
+	$('.nav_power').addClass('active');
+	$('#nav_register').addClass('active');
+</script>
+{% endif %}
+{% endblock %}
